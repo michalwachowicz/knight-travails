@@ -1,3 +1,5 @@
+const Queue = require("./queue");
+
 class BoardGraph {
   constructor() {
     this.vertices = {};
@@ -20,5 +22,50 @@ class BoardGraph {
         );
       }
     }
+  }
+
+  #getStepsArray(startStr, endStr, predecessors) {
+    const arr = [];
+    let current = endStr;
+
+    while (current !== startStr) {
+      arr.push(current);
+      current = predecessors.get(current);
+    }
+
+    return arr.reverse();
+  }
+
+  steps(startStr, endStr) {
+    if (startStr === endStr) return [];
+
+    const queue = new Queue();
+    const visited = new Set();
+    const predecessors = new Map();
+
+    queue.enqueue(startStr);
+    visited.add(startStr);
+
+    while (!queue.isEmpty()) {
+      const position = queue.dequeue();
+      const moves = this.vertices[position];
+
+      for (let move of moves) {
+        const moveStr = move.toString();
+
+        if (!visited.has(moveStr)) {
+          queue.enqueue(moveStr);
+          visited.add(moveStr);
+
+          predecessors.set(moveStr, position);
+        }
+
+        if (moveStr === endStr) {
+          return this.#getStepsArray(startStr, endStr, predecessors);
+        }
+      }
+    }
+
+    return null;
   }
 }
