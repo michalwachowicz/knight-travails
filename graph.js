@@ -1,6 +1,6 @@
 const Queue = require("./queue");
 
-class BoardGraph {
+module.exports = class BoardGraph {
   constructor() {
     this.vertices = {};
 
@@ -89,4 +89,4 @@ class BoardGraph {
     console.log(`You made it in ${moves} moves! Here's your path:`);
     path.forEach((move) => console.log(move));
   }
-}
+};
