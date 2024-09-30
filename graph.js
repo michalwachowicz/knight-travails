@@ -41,7 +41,7 @@ class BoardGraph {
     return arr.reverse();
   }
 
-  steps(startStr, endStr) {
+  path(startStr, endStr) {
     if (startStr === endStr) return [];
 
     const queue = new Queue();
@@ -72,5 +72,21 @@ class BoardGraph {
     }
 
     return null;
+  }
+
+  knightMoves(start, end) {
+    const path = this.path(start.toString(), end.toString());
+
+    if (path === null)
+      throw new Error("Input positions must be within chess board matrix");
+
+    const moves = path.length;
+    if (!moves) {
+      console.log(`You made it in ${moves} moves!`);
+      return;
+    }
+
+    console.log(`You made it in ${moves} moves! Here's your path:`);
+    path.forEach((move) => console.log(move));
   }
 }
