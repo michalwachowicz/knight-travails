@@ -24,12 +24,17 @@ class BoardGraph {
     }
   }
 
+  #moveToArray(move) {
+    const [a, b] = move.split(",");
+    return [parseInt(a), parseInt(b)];
+  }
+
   #getStepsArray(startStr, endStr, predecessors) {
     const arr = [];
     let current = endStr;
 
     while (current !== startStr) {
-      arr.push(current);
+      arr.push(this.#moveToArray(current));
       current = predecessors.get(current);
     }
 
